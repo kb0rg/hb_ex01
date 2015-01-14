@@ -2,7 +2,7 @@ import random
 
 def gameControl():
     
-    num = random.randint(0, 4)
+    num = random.randint(1, 100)
     
     print "Howdy, what's your name?"
     name = raw_input('')
@@ -24,9 +24,9 @@ def evaluate(num, name):
         bestScore = 100000
 
         while(guess != num)     :
-            tuple = validate(guess, num, count)
-            guess = tuple[0]
-            count = tuple[1]     
+            game_results = round_check(guess, num, count)
+            guess = game_results[0]
+            count = game_results[1]     
 
         print 'Well done, ' + name + '! You found my number in ' + str(count) + ' tries!'
         if count < bestScore:
@@ -42,16 +42,17 @@ def evaluate(num, name):
 
 
 
-def validate(guess, num, count):
+def round_check(guess, num, count):
     try: 
         print 'Your guess? '
         guess = int(raw_input(''))
-        if guess < num and guess > 0:
+        if guess < 1 or guess > 100:
+            print "That number is way out of range of 1 to 100!"
+        elif guess < num:
             print "pick a higher number"
-        elif guess > num and guess < 100:
+        else:
             print "pick a lower number"   
-        elif guess < 0 or guess > 100:
-            print "That number is way out of range of 1 to 100!" 
+
         count += 1 
         return (guess, count)
     except ValueError:
